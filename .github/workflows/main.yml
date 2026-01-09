@@ -12,18 +12,17 @@ jobs:
         with:
           channel: 'stable'
 
-      - name: Install dependencies
+      - name: Build App
         run: |
-          cd my_flutter_app
+          # Ищем, в какой папке лежит проект, и заходим в неё
+          PROJECT_DIR=$(find . -name "pubspec.yaml" -exec dirname {} \;)
+          cd $PROJECT_DIR
           flutter pub get
-
-      - name: Build iOS
-        run: |
-          cd my_flutter_app
           flutter build ios --release --no-codesign
-
+          
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
           name: ios-app
-          path: my_flutter_app/build/ios/iphoneos/Runner.app
+          # Этот путь должен вести к собранному приложению
+          path: "**/build/ios/iphoneos/Runner.app"

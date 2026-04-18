@@ -1,0 +1,5 @@
+- name: Run terminal commands
+  run: |
+    flutter --version
+    ls -la
+    echo "Привет из терминала GitHub!"
